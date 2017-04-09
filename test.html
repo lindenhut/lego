@@ -1,0 +1,79 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<style>
+#left {
+	width:20vw;
+	float:left;
+}
+#right {
+	width:80vW;
+	margin-left: 20vw;
+}
+.inputch {
+	width:10vw;
+	margin-left:10px;
+}
+
+</style>
+
+</head>
+<body>
+<script>
+jQuery( function() {
+    jQuery( '#jquery-ui-slider' ) . slider();
+} );
+
+
+function servo(param,sp){
+	if(param=="off"){
+		$.get('http://192.168.1.24:3000/lego/motor/4',{state:"off"});
+		$.get('http://192.168.1.24:3000/lego/motor/6',{state:"off"});
+		$.get('http://192.168.1.24:3000/lego/motor/8',{state:"off"});
+		$.get('http://192.168.1.24:3000/lego/motor/10',{state:"off"});
+
+
+	}else if(param == "r"){
+		$.get('http://192.168.1.24:3000/lego/motor/4',{state:"on",init:"1541",speed:sp});
+		$.get('http://192.168.1.24:3000/lego/motor/6',{state:"on",init:"1550",speed:sp});
+		$.get('http://192.168.1.24:3000/lego/motor/8',{state:"on",init:"1510",speed:sp});
+		$.get('http://192.168.1.24:3000/lego/motor/10',{state:"on",init:"1541",speed:sp});
+	}else if(param == "f"){
+		$.get('http://192.168.1.24:3000/lego/motor/4',{state:"on",init:"1541",speed:sp});
+		$.get('http://192.168.1.24:3000/lego/motor/6',{state:"on",init:"1550",speed:1500-(sp-1500)});
+		$.get('http://192.168.1.24:3000/lego/motor/8',{state:"on",init:"1500",speed:1510-(sp-1500)});
+		$.get('http://192.168.1.24:3000/lego/motor/10',{state:"on",init:"1541",speed:sp});
+	};
+};
+</script>
+<div id="left">
+	<div>ch00:<input class="inputch" type="text" value="1500"></div>
+	<div>ch02:<input class="inputch" type="text" value="1500"></div>
+	<div>ch04:<input class="inputch" type="text" value="1541"></div>
+	<div>ch06:<input class="inputch" type="text" value="1550"></div>
+	<div>ch08:<input class="inputch" type="text" value="1520"></div>
+	<div>ch10:<input class="inputch" type="text" value="1541"></div>
+	<div>ch12:<input class="inputch" type="text" value="0"></div>
+	<div>ch14:<input class="inputch" type="text" value="0"></div>
+</div>
+<div id="right">
+<div id="jquery-ui-slider"></div>
+<div>
+<input type="button" value="1200" onClick="servo('f',1200)">
+<input type="button" value="1300" onClick="servo('f',1300)">
+<input type="button" value="1400" onClick="servo('f',1400)">
+<input type="button" value="1500" onClick="servo('f',1500)">
+<input type="button" value="1600" onClick="servo('f',1600)">
+<input type="button" value="1700" onClick="servo('f',1700)">
+<input type="button" value="1900" onClick="servo('f',1900)">
+<input type="button" value="Stop" onClick="servo('off')">
+<input type="button" value="Right" onClick="servo('r',1600)">
+<input type="button" value="Left" onClick="servo('r',1400)">
+</div>
+</div>
+</body>
+
+
+</html>
